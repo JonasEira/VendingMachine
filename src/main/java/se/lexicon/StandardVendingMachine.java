@@ -1,17 +1,22 @@
 package se.lexicon;
 
+import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class StandardVendingMachine implements VendingMachine {
     private final String name;
     private int depositPool;
+
     private Product[] stockedProducts;
 
     public StandardVendingMachine(String my_vendingMachine) {
         this.name = my_vendingMachine;
         this.depositPool = 0;
         this.stockedProducts = new Product[0];
+
     }
 
     @Override
@@ -51,18 +56,22 @@ public class StandardVendingMachine implements VendingMachine {
     @Override
     public String[] getProducts() {
         String[] tmp = new String[stockedProducts.length];
-        int n = 0;
         try {
+            int n = 0;
             while (n < tmp.length) {
-                String s = stockedProducts[n].getClass().getSimpleName();
+                String s = stockedProducts[n].getClass().getName();
                 Class<?> clazz = Class.forName(s);
                 Method m = clazz.getMethod("getName");
-
-                n++
+                tmp[n] = (String) m.invoke(stockedProducts[n]);
+                n++;
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
         return tmp;

@@ -6,8 +6,10 @@ public class Main {
         svm.addCurrency(Currency.SEK500.getValue());
         int balance = svm.getBalance();
         System.out.println("Balansen på kontot är: "  + balance);
-
-        svm.addProduct(new Fruit("Apple","Sweet",Currency.SEK20.getValue()));
-        System.out.println("Products: " + svm.getProducts());
+        Fruit apple = new Fruit("Apple","Sweet",Currency.SEK20.getValue());
+        svm.addProduct(apple);
+        for(String s : svm.getProducts()){
+            System.out.println("Products: " + s);
+        }
     }
 }
