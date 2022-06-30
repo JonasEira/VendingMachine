@@ -1,10 +1,7 @@
 package se.lexicon;
 
-import javax.swing.*;
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class StandardVendingMachine implements VendingMachine {
     private final String name;
@@ -46,7 +43,7 @@ public class StandardVendingMachine implements VendingMachine {
 
     @Override
     public String getDescription(int i) {
-        if (i > 0 && i < stockedProducts.length) {
+        if (i >= 0 && i < stockedProducts.length) {
             return stockedProducts[i].getDesc();
         } else {
             throw new ArrayIndexOutOfBoundsException("Index not in product array limits");
